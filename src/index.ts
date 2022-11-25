@@ -109,19 +109,15 @@ export function parseSet(set: string) {
 
 export default function QuerySet<T = DefaultContext>() {
     return (ctx: T, next: Next) => {
-        let dirty = false;
-        const converted: Record<string, any> = {};
         const query = (ctx as any).request.query;
-        Object.keys(query).forEach((k) => {
-            const v = query[k];
-            const kl = k.length;
-            if (k.length > 1 && k.endsWith('$') && typeof v === 'string') {
-                converted[k.slice(0, -1)] = parseSet(v);
-                dirty = true;
-            }
-        });
-        if (dirty) {
-            Object.assign(query, converted);
+        if (query) {
+            Object.keys(query).forEach((k) => {
+                const v = query[k];
+                if (k.length > 1 && k.endsWith('$') && typeof v === 'string') {
+                    query[k.slice(0, -1)] = parseSet(v);
+                    delete query[k];
+                }
+            });
         }
         return next();
     };
