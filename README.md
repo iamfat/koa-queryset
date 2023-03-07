@@ -19,9 +19,9 @@ Koa Middlware to parse QuerySet
 ?key$=!             # not blank
 ?key$=!true         # not true
 ?key$=!1,2,3        # not in 1,2,3
-?key$=*             # like '%'
-?key$=*abc*def*     # like '%abc%def%'
-?key$=!*abc*def*    # not like '%abc%def%'
+?key$=*             # like '*'
+?key$=*abc*def*     # like '*abc*def*'
+?key$=!*abc*def*    # not like '*abc*def*'
 
 # do not suppor to combind !/| with wildcard match
 ?key$=!1*,2*        # not in ('1*', '2*')

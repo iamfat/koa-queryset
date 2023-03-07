@@ -93,11 +93,9 @@ export function parseSet(set: string) {
 
     const items = set.split(',').map((s) => s.trim());
     let value: Value | Value[] = items.length > 1 ? items.map((s) => smartCast(s)) : smartCast(items[0]);
-    if (typeof value === 'string') {
-        if (value.indexOf('*') >= 0) {
-            value = value.replace(/\*/g, '%');
-            return [[not ? 'not like' : 'like', value] as QuerySet];
-        }
+    if (typeof value === 'string' && value !== '') {
+        const valueWithWildCard = value.indexOf('*') >= 0 ? value : `*${value}*`;
+        return [[not ? 'not like' : 'like', valueWithWildCard] as QuerySet];
     }
 
     if (not) {

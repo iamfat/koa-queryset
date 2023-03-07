@@ -26,9 +26,11 @@ describe('parseSet', () => {
 
     it('should parse pattern', async () => {
         const { parseSet } = await QuerySet;
-        expect(parseSet('*')).toEqual([['like', '%']]);
-        expect(parseSet('*abc*def*')).toEqual([['like', '%abc%def%']]);
-        expect(parseSet('!1*,2*')).toEqual([['not', ['1*', '2*']]]);
+        expect(parseSet('*')).toEqual([['like', '*']]);
+        expect(parseSet('abc')).toEqual([['like', '*abc*']]);
+        expect(parseSet('*abc*def*')).toEqual([['like', '*abc*def*']]);
+        expect(parseSet('!*abc*def*')).toEqual([['not like', '*abc*def*']]);
+        expect(parseSet('!a*,2*')).toEqual([['not', ['a*', '2*']]]);
         expect(parseSet('|a*,b*')).toEqual([['or', ['a*', 'b*']]]);
     });
 });
