@@ -1,5 +1,5 @@
 describe('parseSet', () => {
-    const QuerySet = import('../lib/index.mjs');
+    const QuerySet = import('../lib/index.js');
     it('should parse built-in types', async () => {
         const { parseSet } = await QuerySet;
         expect(parseSet('1')).toBe(1);
