@@ -3,7 +3,7 @@ import type { Next, DefaultContext } from 'koa';
 export type RangeOp = 'gt' | 'gte' | 'lt' | 'lte';
 export type Value = string | number | boolean | null | undefined;
 export type QueryRange = [RangeOp, string | number];
-export type QuerySet = QueryRange | ['or' | 'not' | 'not like', Value | Value[]];
+export type QuerySet = QueryRange | ['or' | 'like' | 'not' | 'not like', Value | Value[]];
 
 export function smartCast(value: any): Value {
     if (typeof value !== 'string') return value;
