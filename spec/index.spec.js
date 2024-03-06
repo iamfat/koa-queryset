@@ -10,6 +10,16 @@ describe('parseSet', () => {
         expect(parseSet('')).toBe('');
     });
 
+    it('should parse range', async () => {
+        const { parseSet } = await QuerySet;
+        expect(parseSet('[1,)')).toEqual([['gte', 1]]);
+        expect(parseSet('(1,)')).toEqual([['gt', 1]]);
+        expect(parseSet('(,1)')).toEqual([['lt', 1]]);
+        expect(parseSet('(,1]')).toEqual([['lte', 1]]);
+        expect(parseSet('(1,3]')).toEqual([['gt', 1], ['lte', 3]]);
+        expect(parseSet('[1,3)')).toEqual([['gte', 1], ['lt', 3]]);
+    });
+
     it('should parse set', async () => {
         const { parseSet } = await QuerySet;
         expect(parseSet('1,2,3m')).toEqual([1, 2, '3m']);
